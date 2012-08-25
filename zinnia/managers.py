@@ -85,3 +85,13 @@ class EntryPublishedManager(models.Manager):
                 lookup |= query_part
 
         return self.get_query_set().filter(lookup)
+
+class EntryAnonViewablePublishedManager(EntryPublishedManager):
+    """
+    Manager to retrieve published entries that are viewable
+    by anonymous (not logged-in) users.
+    """
+    def get_query_set(self):
+        return super(EntryAnonViewablePublishedManager, self).get_query_set() \
+               .filter(login_required=False)
+

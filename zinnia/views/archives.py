@@ -8,6 +8,7 @@ from django.views.generic.dates import BaseWeekArchiveView
 from django.views.generic.dates import BaseDayArchiveView
 from django.views.generic.dates import BaseTodayArchiveView
 
+from zinnia.settings import HIDE_LOGIN_REQUIRED_ENTRIES
 from zinnia.models import Entry
 from zinnia.views.mixins.archives import ArchiveMixin
 from zinnia.views.mixins.archives import PreviousNextPublishedMixin
@@ -35,6 +36,17 @@ class EntryArchiveMixin(ArchiveMixin,
       custom templates for archives
     """
     queryset = Entry.published.all
+    
+    def get_queryset(self):
+        """
+        If the user is not logged-in and HIDE_LOGIN_REQUIRED_ENTRIES is set to
+        True, return  a queryset foronly the published entries that aren't 
+        login_required. Otherwise, return a queryset for all published entries
+        """
+        if HIDE_LOGIN_REQUIRED_ENTRIES and \
+           not self.request.user.is_authenticated():
+            return Entry.anon_viewable_published.all
+        return super(EntryArchiveMixin,self)
 
 
 class EntryIndex(EntryArchiveMixin,

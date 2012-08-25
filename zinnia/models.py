@@ -31,6 +31,7 @@ from zinnia.settings import MARKDOWN_EXTENSIONS
 from zinnia.settings import AUTO_CLOSE_COMMENTS_AFTER
 from zinnia.managers import entries_published
 from zinnia.managers import EntryPublishedManager
+from zinnia.managers import EntryAnonViewablePublishedManager
 from zinnia.managers import AuthorPublishedManager
 from zinnia.managers import PINGBACK, TRACKBACK
 from zinnia.managers import DRAFT, HIDDEN, PUBLISHED
@@ -169,6 +170,7 @@ class EntryAbstractClass(models.Model):
 
     objects = models.Manager()
     published = EntryPublishedManager()
+    anon_viewable_published = EntryAnonViewablePublishedManager()
 
     @property
     def html_content(self):
