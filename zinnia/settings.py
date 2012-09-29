@@ -90,6 +90,6 @@ USE_TWITTER = getattr(settings, 'ZINNIA_USE_TWITTER',
                            TWITTER_CONSUMER_KEY and TWITTER_CONSUMER_SECRET))
 
 # The existing behavior is the default
-HIDE_LOGIN_REQUIRED_ENTRIES = getattr('ZINNIA_HIDE_LOGIN_REQUIRED_ENTRIES',
+HIDE_LOGIN_REQUIRED_ENTRIES = getattr(settings, 'ZINNIA_HIDE_LOGIN_REQUIRED_ENTRIES',
                                       False)
               
