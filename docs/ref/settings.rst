@@ -20,27 +20,42 @@ All settings described here can be found in :file:`zinnia/settings.py`.
 Entry
 =====
 
-.. setting:: ZINNIA_ENTRY_TEMPLATES
-
-ZINNIA_ENTRY_TEMPLATES
-----------------------
-**Default value:** ``()`` (Empty tuple)
-
-List of tuple for extending the list of templates availables for
-rendering the entry. By using this setting, you can change the look and
-feel of an entry directly in the admin interface. Example: ::
-
-  ZINNIA_ENTRY_TEMPLATES = (('entry_detail_alternate.html',
-                             gettext('Alternative template')),)
-
 .. setting:: ZINNIA_ENTRY_BASE_MODEL
 
 ZINNIA_ENTRY_BASE_MODEL
 -----------------------
-**Default value:** ``''`` (Empty string)
+**Default value:** ``'zinnia.models_bases.entry.AbstractEntry'`` (Empty string)
 
 String defining the base model path for the Entry model. See
 :doc:`/how-to/extending_entry_model` for more informations.
+
+.. setting:: ZINNIA_ENTRY_DETAIL_TEMPLATES
+
+ZINNIA_ENTRY_DETAIL_TEMPLATES
+-----------------------------
+**Default value:** ``()`` (Empty tuple)
+
+List of tuple for extending the list of templates availables for
+rendering the entry detail view. By using this setting, you can
+change the look and feel of an entry page directly in the admin
+interface. Example: ::
+
+  ZINNIA_ENTRY_DETAIL_TEMPLATES = (('entry_detail_alternate.html',
+                                    gettext('Alternative template')),)
+
+.. setting:: ZINNIA_ENTRY_CONTENT_TEMPLATES
+
+ZINNIA_ENTRY_CONTENT_TEMPLATES
+------------------------------
+**Default value:** ``()`` (Empty tuple)
+
+List of tuple for extending the list of templates availables for
+rendering the content of an entry. By using this setting, you can
+change the look and feel of an entry directly in the admin
+interface. Example: ::
+
+  ZINNIA_ENTRY_CONTENT_TEMPLATES = (('zinnia/_entry_detail_alternate.html',
+                                     gettext('Alternative template')),)
 
 .. setting:: ZINNIA_UPLOAD_TO
 
@@ -79,10 +94,21 @@ ZINNIA_MARKDOWN_EXTENSIONS
 --------------------------
 **Default value:** ``''`` (Empty string)
 
-Extensions names to be used for rendering the entries in MarkDown. Example:
-::
+Extensions names coma separated to be used for rendering the entries in
+MarkDown. Example: ::
 
   ZINNIA_MARKDOWN_EXTENSIONS = 'extension1_name,extension2_name...'
+
+.. setting:: ZINNIA_RESTRUCTUREDTEXT_SETTINGS
+
+ZINNIA_RESTRUCTUREDTEXT_SETTINGS
+--------------------------------
+**Default value:** ``{}`` (Empty dict)
+
+A dictionary containing settings for the RestructuredText markup
+processing. See the Docutils restructuredtext `writer settings docs
+<http://docutils.sourceforge.net/docs/user/config.html#html4css1-writer>`_
+for details.
 
 .. setting:: ZINNIA_WYSIWYG
 
@@ -110,6 +136,40 @@ This setting can also be used for disabling the WYSIWYG
 functionnality. Example: ::
 
   ZINNIA_WYSIWYG = None
+
+.. _settings-preview:
+
+Preview
+=======
+
+.. setting:: ZINNIA_PREVIEW_SPLITTERS
+
+ZINNIA_PREVIEW_SPLITTERS
+------------------------
+
+**Default value:** ``['<!-- more -->', '<!--more-->'])``
+
+List of split markers used to make a preview of the entry's content if
+present in the HTML. All the content before the marker will be used to
+build the preview of the entry.
+
+.. setting:: ZINNIA_PREVIEW_MAX_WORDS
+
+ZINNIA_PREVIEW_MAX_WORDS
+------------------------
+
+**Default value:** ``55``
+
+Number of words used to build the entry's preview if no split markers are
+found.
+
+ZINNIA_PREVIEW_MORE_STRING
+--------------------------
+
+**Default value:** ``' ...'``
+
+The string to be appended to the content when a truncation for the preview
+is done.
 
 .. _settings-views:
 
@@ -171,6 +231,17 @@ So by default you will have 15 entries displayed on the feeds.
 URLs
 ====
 
+.. setting:: ZINNIA_TRANSLATED_URLS
+
+ZINNIA_TRANSLATED_URLS
+----------------------
+.. versionadded:: 0.12.2
+
+**Default value:** ``False``
+
+Boolean used to activate the internationalization of the URLs provided by
+Zinnia if the translation is avaialable in your language.
+
 .. setting:: ZINNIA_URL_SHORTENER_BACKEND
 
 ZINNIA_URL_SHORTENER_BACKEND
@@ -190,8 +261,8 @@ set this setting to ``https``.
 
 .. _settings-comments:
 
-Comment moderation
-==================
+Comments
+========
 
 .. setting:: ZINNIA_AUTO_MODERATE_COMMENTS
 
@@ -199,18 +270,20 @@ ZINNIA_AUTO_MODERATE_COMMENTS
 -----------------------------
 **Default value:** ``False``
 
-Determine if a new comment should be allowed to show up
-immediately or should be marked non-public and await approval.
+Determine if a new comment should be marked non-public and await approval.
+Leave as ``False`` to allow comments to show up immediately.
 
 .. setting:: ZINNIA_AUTO_CLOSE_COMMENTS_AFTER
 
 ZINNIA_AUTO_CLOSE_COMMENTS_AFTER
 --------------------------------
-**Default value:** ``None``
+**Default value:** ``None`` (forever)
 
 Determine the number of days where comments are open. If you set this
 setting to ``10`` the comments will be closed automaticaly 10 days after
 the publication date of your entries.
+
+``0`` means disabling comments completely.
 
 .. setting:: ZINNIA_MAIL_COMMENT_REPLY
 
@@ -259,6 +332,44 @@ ZINNIA_COMMENT_MIN_WORDS
 Minimal number of words required to post a comment if
 :func:`zinnia.spam_checker.backends.long_enough.backend` is enabled in
 :setting:`ZINNIA_SPAM_CHECKER_BACKENDS`.
+
+.. setting:: ZINNIA_DEFAULT_USER_ID
+
+ZINNIA_COMMENT_FLAG_USER_ID
+---------------------------
+**Default value:** ``1``
+
+The ID of the User to be used when flagging the comments as spam, pingback
+or trackback.
+
+.. _settings-linkbacks:
+
+Linkbacks
+=========
+
+.. setting:: ZINNIA_AUTO_CLOSE_PINGBACKS_AFTER
+
+ZINNIA_AUTO_CLOSE_PINGBACKS_AFTER
+---------------------------------
+**Default value:** ``None`` (forever)
+
+Determine the number of days where pingbacks are open. If you set this
+setting to ``10`` the pingbacks will be closed automaticaly 10 days after
+the publication date of your entries.
+
+``0`` means disabling pingbacks completely.
+
+.. setting:: ZINNIA_AUTO_CLOSE_TRACKBACKS_AFTER
+
+ZINNIA_AUTO_CLOSE_TRACKBACKS_AFTER
+----------------------------------
+**Default value:** ``None`` (forever)
+
+Determine the number of days where trackbacks are open. If you set this
+setting to ``10`` the trackbacks will be closed automaticaly 10 days after
+the publication date of your entries.
+
+``0`` means disabling trackbacks completely.
 
 .. _settings-pinging:
 
@@ -347,6 +458,7 @@ to optimize the search querying and the results.
 
 ZINNIA_USE_TWITTER
 ------------------
-**Default value:** ``True if python-twitter is in the PYTHONPATH``
+**Default value:** ``True if the crendentials of Twitter have been defined``
 
-Boolean telling if Zinnia can use Twitter.
+Boolean telling if the credentials of a Twitter account have been set and
+if Zinnia can post on Twitter.

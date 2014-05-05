@@ -7,18 +7,35 @@ SAVE_PING_DIRECTORIES = getattr(settings, 'ZINNIA_SAVE_PING_DIRECTORIES',
                                 bool(PING_DIRECTORIES))
 SAVE_PING_EXTERNAL_URLS = getattr(settings, 'ZINNIA_PING_EXTERNAL_URLS', True)
 
+TRANSLATED_URLS = getattr(settings, 'ZINNIA_TRANSLATED_URLS', False)
+
 COPYRIGHT = getattr(settings, 'ZINNIA_COPYRIGHT', 'Zinnia')
 
 PAGINATION = getattr(settings, 'ZINNIA_PAGINATION', 10)
 ALLOW_EMPTY = getattr(settings, 'ZINNIA_ALLOW_EMPTY', True)
 ALLOW_FUTURE = getattr(settings, 'ZINNIA_ALLOW_FUTURE', True)
 
-ENTRY_TEMPLATES = getattr(settings, 'ZINNIA_ENTRY_TEMPLATES', [])
-ENTRY_BASE_MODEL = getattr(settings, 'ZINNIA_ENTRY_BASE_MODEL', '')
+ENTRY_BASE_MODEL = getattr(settings, 'ZINNIA_ENTRY_BASE_MODEL',
+                           'zinnia.models_bases.entry.AbstractEntry')
+
+ENTRY_DETAIL_TEMPLATES = getattr(
+    settings, 'ZINNIA_ENTRY_DETAIL_TEMPLATES', [])
+ENTRY_CONTENT_TEMPLATES = getattr(
+    settings, 'ZINNIA_ENTRY_CONTENT_TEMPLATES', [])
 
 MARKUP_LANGUAGE = getattr(settings, 'ZINNIA_MARKUP_LANGUAGE', 'html')
 
 MARKDOWN_EXTENSIONS = getattr(settings, 'ZINNIA_MARKDOWN_EXTENSIONS', '')
+
+RESTRUCTUREDTEXT_SETTINGS = getattr(
+    settings, 'ZINNIA_RESTRUCTUREDTEXT_SETTINGS', {})
+
+PREVIEW_SPLITTERS = getattr(settings, 'ZINNIA_PREVIEW_SPLITTERS',
+                            ['<!-- more -->', '<!--more-->'])
+
+PREVIEW_MAX_WORDS = getattr(settings, 'ZINNIA_PREVIEW_MAX_WORDS', 55)
+
+PREVIEW_MORE_STRING = getattr(settings, 'ZINNIA_PREVIEW_MORE_STRING', ' ...')
 
 WYSIWYG_MARKUP_MAPPING = {
     'textile': 'markitup',
@@ -28,6 +45,12 @@ WYSIWYG_MARKUP_MAPPING = {
 
 WYSIWYG = getattr(settings, 'ZINNIA_WYSIWYG',
                   WYSIWYG_MARKUP_MAPPING.get(MARKUP_LANGUAGE))
+
+AUTO_CLOSE_PINGBACKS_AFTER = getattr(
+    settings, 'ZINNIA_AUTO_CLOSE_PINGBACKS_AFTER', None)
+
+AUTO_CLOSE_TRACKBACKS_AFTER = getattr(
+    settings, 'ZINNIA_AUTO_CLOSE_TRACKBACKS_AFTER', None)
 
 AUTO_CLOSE_COMMENTS_AFTER = getattr(
     settings, 'ZINNIA_AUTO_CLOSE_COMMENTS_AFTER', None)
@@ -44,6 +67,8 @@ MAIL_COMMENT_NOTIFICATION_RECIPIENTS = getattr(
     [manager_tuple[1] for manager_tuple in settings.MANAGERS])
 
 COMMENT_MIN_WORDS = getattr(settings, 'ZINNIA_COMMENT_MIN_WORDS', 4)
+
+COMMENT_FLAG_USER_ID = getattr(settings, 'ZINNIA_COMMENT_FLAG_USER_ID', 1)
 
 UPLOAD_TO = getattr(settings, 'ZINNIA_UPLOAD_TO', 'uploads/zinnia')
 
@@ -86,7 +111,7 @@ TWITTER_ACCESS_KEY = getattr(settings, 'TWITTER_ACCESS_KEY', '')
 TWITTER_ACCESS_SECRET = getattr(settings, 'TWITTER_ACCESS_SECRET', '')
 
 USE_TWITTER = getattr(settings, 'ZINNIA_USE_TWITTER',
-                      bool(TWITTER_ACCESS_KEY and TWITTER_ACCESS_SECRET and \
+                      bool(TWITTER_ACCESS_KEY and TWITTER_ACCESS_SECRET and
                            TWITTER_CONSUMER_KEY and TWITTER_CONSUMER_SECRET))
 
 # The existing behavior is the default

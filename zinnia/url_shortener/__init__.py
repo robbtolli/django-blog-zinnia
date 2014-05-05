@@ -1,4 +1,4 @@
-"""Url shortener for Zinnia"""
+"""URL shortener for Zinnia"""
 import warnings
 
 from django.utils.importlib import import_module
@@ -9,7 +9,9 @@ from zinnia.url_shortener.backends.default import backend as default_backend
 
 
 def get_url_shortener():
-    """Return the selected url shortener backend"""
+    """
+    Return the selected URL shortener backend.
+    """
     try:
         backend_module = import_module(URL_SHORTENER_BACKEND)
         backend = getattr(backend_module, 'backend')
@@ -17,7 +19,7 @@ def get_url_shortener():
         warnings.warn('%s backend cannot be imported' % URL_SHORTENER_BACKEND,
                       RuntimeWarning)
         backend = default_backend
-    except ImproperlyConfigured, e:
+    except ImproperlyConfigured as e:
         warnings.warn(str(e), RuntimeWarning)
         backend = default_backend
 

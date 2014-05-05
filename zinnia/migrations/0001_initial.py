@@ -3,6 +3,11 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+from zinnia.migrations import user_name
+from zinnia.migrations import user_table
+from zinnia.migrations import user_orm_label
+from zinnia.migrations import user_model_label
+
 
 class Migration(SchemaMigration):
 
@@ -63,7 +68,7 @@ class Migration(SchemaMigration):
         db.create_table('zinnia_entry_authors', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('entry', models.ForeignKey(orm['zinnia.entry'], null=False)),
-            ('user', models.ForeignKey(orm['auth.user'], null=False))
+            ('user', models.ForeignKey(orm[user_orm_label], null=False))
         ))
         db.create_unique('zinnia_entry_authors', ['entry_id', 'user_id'])
 
@@ -101,8 +106,8 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
-        'auth.user': {
-            'Meta': {'object_name': 'User'},
+        user_model_label: {
+            'Meta': {'object_name': user_name, 'db_table': "'%s'" % user_table},
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
@@ -139,7 +144,7 @@ class Migration(SchemaMigration):
         },
         'zinnia.entry': {
             'Meta': {'object_name': 'Entry'},
-            'authors': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'blank': 'True'}),
+            'authors': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['%s']" % user_orm_label, 'blank': 'True'}),
             'categories': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['zinnia.Category']"}),
             'comment_enabled': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'blank': 'True'}),
             'content': ('django.db.models.fields.TextField', [], {}),

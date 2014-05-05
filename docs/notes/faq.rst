@@ -4,47 +4,9 @@ Frequently Asked Questions
 
 .. contents::
 
-.. _faq-templates:
+.. _faq-entries:
 
-Templates
-=========
-
-.. _customizing-templates:
-
-The templates does not fit to my wishes. What can I do ?
---------------------------------------------------------
-
-You should take a look on :doc:`/how-to/customize_look_and_feel`.
-
-.. _faq-comments:
-
-Comments
-========
-
-.. _customizing-comments:
-
-Is it possible have a different comment system, with reply feature for example ?
---------------------------------------------------------------------------------
-
-Yes the comment system integrated in Zinnia is based on
-:mod:`django.contrib.comments` and can be extended or replaced if doesn't
-quite fit your needs. You should take a look on the
-`customizing the comments framework`_ documentation for more information.
-
-.. warning::
-
-   The custom comment Model must be inherited from
-   :class:`~django.contrib.comments.models.Comment` and implement the
-   :class:`~django.contrib.comments.managers.CommentManager` to properly
-   work with Zinnia.
-
-
-If you want the ability to reply on comments, you can take a look at
-`django-threadcomments`_ for example.
-
-.. _faq-edition:
-
-Edition
+Entries
 =======
 
 .. _custom-markups:
@@ -58,10 +20,16 @@ entries in a custom markup language a solution is to disable the WYSIWYG
 editor in the admin site with the :setting:`ZINNIA_WYSIWYG` setting, and
 use the appropriate template filter in your templates.
 
-.. _faq-authors:
+I want to have multilingual support on the entries, is it possible ?
+--------------------------------------------------------------------
 
-Authors
-=======
+Due to the extending capabilities of Zinnia, many solutions on this
+problematic are possible, but you must keep in mind that multiplingual
+entries is just a concept, the needs and the implementations can differ
+from a project to another. But you should take a look on this excellent
+tutorial to `convert Zinnia into a multilingual Weblog`_ with
+`django-modeltranslation`_, which can be a good starting point for your
+needs.
 
 .. _multiple-authors:
 
@@ -94,7 +62,7 @@ How can I use the image field for fitting to my skin ?
 
 Take a looks at `sorl.thumbnail`_ and use his templatetags.
 
-You can do something like this in your templates :
+You can do something like this in your templates:
 
 .. code-block:: html+django
 
@@ -106,8 +74,8 @@ I want an image gallery in my posts, what can I do ?
 ----------------------------------------------------
 
 Simply create a new application with a model named :class:`EntryImage` with a
-:class:`~django.db.models.ForeignKey` to the :class:`~zinnia.models.Entry`
-model.
+:class:`~django.db.models.ForeignKey` to the
+:class:`~zinnia.models.entry.Entry` model.
 
 Then in the admin module of your app, unregister the
 :class:`~zinnia.admin.entry.EntryAdmin` class, and use
@@ -119,7 +87,7 @@ Here an simple example : ::
   from django.db import models
   from django.utils.translation import ugettext_lazy as _
 
-  from zinnia.models import Entry
+  from zinnia.models.entry import Entry
 
   class EntryImage(models.Model):
       """Image Model"""
@@ -136,8 +104,8 @@ Here an simple example : ::
 
   from django.contrib import admin
 
-  from zinnia.models import Entry
   from zinnia.admin import EntryAdmin
+  from zinnia.models.entry import Entry
   from gallery.models import EntryImage
 
   class EntryImageInline(admin.TabularInline):
@@ -149,14 +117,42 @@ Here an simple example : ::
   admin.site.unregister(Entry)
   admin.site.register(Entry, EntryAdminImage)
 
-Another and better solution is to extend the :class:`~zinnia.models.Entry`
+Another and better solution is to extend the :class:`~zinnia.models.entry.Entry`
 model like described in :doc:`/how-to/extending_entry_model`.
 
+.. _faq-comments:
 
-.. _`customizing the look and feel`: https://docs.djangoproject.com/en/dev/intro/tutorial02/#customize-the-admin-look-and-feel
-.. _`customizing the comments framework`: https://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
-.. _`django-threadcomments`: https://github.com/HonzaKral/django-threadedcomments
+Comments
+========
+
+.. _customizing-comments:
+
+Is it possible have a different comment system, with reply feature for example ?
+--------------------------------------------------------------------------------
+
+Yes the comment system integrated in Zinnia is based on
+:mod:`django.contrib.comments` and can be extended or replaced if doesn't
+quite fit your needs. You should take a look on the
+`customizing the comments framework`_ documentation for more information.
+
+.. warning::
+
+   The custom comment Model must be inherited from
+   :class:`~django.contrib.comments.models.Comment` and implement the
+   :class:`~django.contrib.comments.managers.CommentManager` to properly
+   work with Zinnia.
+
+
+If you want the ability to reply on comments, you can take a look at
+`zinnia-threaded-comments`_ or at `django-threadcomments`_.
+
+
 .. _`MarkDown`: http://daringfireball.net/projects/markdown/
 .. _`Textile`: http://redcloth.org/hobix.com/textile/
 .. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
+.. _`convert Zinnia into a multilingual Weblog`:  http://www.codeispoetry.me/django-blog-zinnia-multilanguage-support-with-django-modeltranslation/
+.. _`django-modeltranslation`:
 .. _`sorl.thumbnail`: http://thumbnail.sorl.net/
+.. _`customizing the comments framework`: https://docs.djangoproject.com/en/dev/ref/contrib/comments/custom/
+.. _`zinnia-threaded-comments`: https://github.com/Fantomas42/zinnia-threaded-comments
+.. _`django-threadcomments`: https://github.com/HonzaKral/django-threadedcomments

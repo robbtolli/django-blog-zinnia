@@ -1,6 +1,95 @@
 CHANGELOG
 =========
 
+0.14.1
+------
+
+* Fix dates on WXR export
+* Fix blogger2zinnia unicode issue
+* Fix unicode issue on Category admin
+* Fix URL errors with custom comment app
+* Full support of custom User model
+* Metrics for the content previews
+* More useable pagination
+* More blocks for customizing reactions
+* Minor documentation updates
+* Minor fixes for default skin
+* Review admin form for editing the entries
+* Restricted preview for unpublished entries
+
+https://github.com/Fantomas42/django-blog-zinnia/compare/v0.14...v0.14.1
+
+0.14
+----
+
+* Full Python 3.0 support
+* Django 1.5 is no longer supported
+* Better support of custom User model
+* Improvements on the archives by week
+* Fix timezone issues in templatetags and archives
+* Database query optimizations in the archives views
+
+https://github.com/Fantomas42/django-blog-zinnia/compare/v0.13...v0.14
+
+0.13
+----
+
+* Start Python 3.0 support
+* Display page number in list
+* Basic support of custom User
+* Django 1.4 is no longer supported
+
+https://github.com/Fantomas42/django-blog-zinnia/compare/v0.12.3...v0.13
+
+0.12.3
+------
+
+* Better ``skeleton.html``
+* Better rendering for the slider
+* Add view for having a random entry
+* Compatibility fix with Django 1.5 in admin
+* Fix issue with author detail view paginated
+* Better settings for ``ZINNIA_AUTO_CLOSE_*_AFTER``
+
+0.12.2
+------
+
+* CSS updates and fixes
+* Fix viewport meta tag
+* I18n support for the URLs
+* Update MarkItUp to v1.1.13
+* Update WYMeditor to v1.0.0b3
+* Entry's content can be blank
+* Compatibility fix for WXR > 1.0
+* Fix potential issue on ``check_is_spam``
+
+0.12.1
+------
+
+* Microformats improved
+* Improve Blogger importer
+* Finest control on linkbacks
+* Split Entry model into mixins
+* Compatibility fix with Django 1.5
+* Custom template for content rendering
+* Fix Python 2.7 issues with ``wp2zinnia``
+
+0.12
+----
+
+* Optimizations on the templates
+* Optimizations on the database queries
+* Denormalization of the comments
+* ``get_authors`` context improved
+* ``get_tag_cloud`` context improved
+* ``get_categories`` context improved
+* Default theme declinations
+* Default theme more responsive
+* Updating ``helloworld.json`` fixture
+* Fix issues with authors in ``wp2zinnia``
+* Better integration of the comments system
+* Models has been splitted into differents modules
+
 0.11.2
 ------
 

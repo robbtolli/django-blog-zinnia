@@ -1,12 +1,11 @@
 {% extends "zinnia/base.html" %}
 {% load i18n %}
-{% load url from future %}
 
-{% block meta-description %}{% trans "Author list" %}{% endblock %}
+{% block meta-description %}{% trans "Author list" %}{% endblock meta-description %}
 
-{% block title %}{% trans "Authors" %}{% endblock %}
+{% block title %}{% trans "Authors" %}{% endblock title %}
 
-{% block body-class %}author-list{% endblock %}
+{% block body-class %}author-list{% endblock body-class %}
 
 {% block content %}
 <h2>{% trans "Author list" %}</h2>
@@ -14,10 +13,10 @@
 <ul>
   {% for object in object_list %}
   <li class="vcard">
-    <a href="{% url 'zinnia_author_detail' object.username %}"
+    <a href="{{ object.get_absolute_url }}"
        title="{% blocktrans with author=object %}Show all {{ author }}'s entries{% endblocktrans %}"
-       class="fn nickname url">{{ object }}</a>
-    {% blocktrans count entry_count=object.entries_published.count %}{{ entry_count }} entry{% plural %}{{ entry_count }} entries{% endblocktrans %}
+       class="fn url{% if not author.get_full_name %} nickname{% endif %}">{{ object }}</a>
+    {% blocktrans count entry_count=object.count_entries_published %}{{ entry_count }} entry{% plural %}{{ entry_count }} entries{% endblocktrans %}
   </li>
   {% empty %}
   <li>
@@ -25,4 +24,4 @@
   </li>
   {% endfor %}
 </ul>
-{% endblock %}
+{% endblock content %}

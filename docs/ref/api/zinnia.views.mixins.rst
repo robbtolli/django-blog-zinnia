@@ -25,6 +25,14 @@ mixins Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`entry_preview` Module
+------------------------------
+
+.. automodule:: zinnia.views.mixins.entry_preview
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`entry_protection` Module
 ------------------------------
 
@@ -33,26 +41,10 @@ mixins Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`mimetypes` Module
------------------------
-
-.. automodule:: zinnia.views.mixins.mimetypes
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`templates` Module
 -----------------------
 
 .. automodule:: zinnia.views.mixins.templates
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`tz_fixes` Module
-----------------------
-
-.. automodule:: zinnia.views.mixins.tz_fixes
     :members:
     :undoc-members:
     :show-inheritance:

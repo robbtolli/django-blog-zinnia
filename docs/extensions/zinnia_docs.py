@@ -10,6 +10,7 @@ from django.db import models
 from django.utils.html import strip_tags
 from django.utils.encoding import force_unicode
 
+
 def skip_model_member(app, what, name, obj, skip, options):
     # These fields always fails !
     if name in ('tags', 'image'):
@@ -19,8 +20,7 @@ def skip_model_member(app, what, name, obj, skip, options):
 
 def process_model_docstring(app, what, name, obj, options, lines):
     if inspect.isclass(obj) and issubclass(obj, models.Model):
-        fields = obj._meta._fields()
-        for field in fields:
+        for field in obj._meta.fields:
             # Decode and strip any html out of the field's help text
             help_text = strip_tags(force_unicode(field.help_text))
             # Decode and capitalize the verbose name, for use if there isn't
@@ -28,26 +28,31 @@ def process_model_docstring(app, what, name, obj, options, lines):
             verbose_name = force_unicode(field.verbose_name).capitalize()
 
             if help_text:
-                lines.append(u':param %s: %s' % (field.attname, help_text))
+                lines.append(':param %s: %s' % (field.attname, help_text))
             else:
-                lines.append(u':param %s: %s' % (field.attname, verbose_name))
+                lines.append(':param %s: %s' % (field.attname, verbose_name))
             # Add the field's type to the docstring
-            lines.append(u':type %s: %s' % (field.attname,
-                                            type(field).__name__))
+            lines.append(':type %s: %s' % (field.attname,
+                                           type(field).__name__))
     # Return the extended docstring
     return lines
 
 
 def setup(app):
     app.add_crossref_type(
-        directivename = "setting",
-        rolename      = "setting",
-        indextemplate = "pair: %s; setting",
+        directivename = 'setting',
+        rolename      = 'setting',
+        indextemplate = 'pair: %s; setting',
     )
     app.add_crossref_type(
-        directivename = "templatetag",
-        rolename      = "ttag",
-        indextemplate = "pair: %s; template tag"
+        directivename = 'templatetag',
+        rolename      = 'ttag',
+        indextemplate = 'pair: %s; template tag'
+    )
+    app.add_crossref_type(
+        directivename = 'templatefilter',
+        rolename      = 'tfilter',
+        indextemplate = 'pair: %s; template filter'
     )
     app.connect('autodoc-process-docstring',
                 process_model_docstring)

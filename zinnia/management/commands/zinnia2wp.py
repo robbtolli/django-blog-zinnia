@@ -9,8 +9,8 @@ from tagging.models import Tag
 
 from zinnia import __version__
 from zinnia.settings import PROTOCOL
-from zinnia.models import Entry
-from zinnia.models import Category
+from zinnia.models.entry import Entry
+from zinnia.models.category import Category
 
 
 class Command(NoArgsCommand):
@@ -28,4 +28,4 @@ class Command(NoArgsCommand):
                         'site': site,
                         'site_url': '%s://%s' % (PROTOCOL, site.domain)}
         export = render_to_string('zinnia/wxr.xml', blog_context)
-        print smart_str(export)
+        print(smart_str(export))

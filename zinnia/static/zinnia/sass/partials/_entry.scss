@@ -5,63 +5,55 @@
 h2.entry-title {
   font-weight: bold;
   margin-bottom: 0;
-  border-bottom: 1px solid $border-color;
-  text-shadow: 1px 1px 0 #ccc;
 }
 
-p.entry-info {
-  color: $quiet-color;
+.entry-info {
   padding-left: 2em;
   background: transparent image-url("category.png") no-repeat scroll 0.5em;
 }
 
+.entry-last-update {
+  display: none;
+}
+
 .entry-body {
-  text-align: justify;
   padding-right: 0.5em;
-  font-size: 1.2em;
   img {
+    padding: 1em;
+    max-width: 100%;
+    @include box-sizing(border-box);
     &, &.left {
-    margin: 0 1.5em 1.5em 0;
+    margin: 0 1em 1em 0;
     float: left;
     }
     &.right {
-      margin: 0 0 1.5em 1.5em;
+      margin: 0 0 1em 1em;
       float: right;
     }
   }
   li {
     list-style-image: none;
   }
-  pre, blockquote {
-    width: auto;
-    overflow: auto;
-    padding: 1em;
-    clear: none;
-    float: none;
-    background-color: $box-color;
-  }
-  blockquote {
-    border: 1px dashed darken($box-color, 20%);
-    p {
-      margin: 0;
-    }
-  }
-  pre {
-    line-height: 110%;
-    border-top: 1px solid darken($box-color, 20%);
-    border-bottom: 1px solid darken($box-color, 20%);
-  }
+}
+
+.entry-content {
+  text-align: justify;
+  p { font-size: 1.2em; }
+  .hide { display: none; }
+  .highlight { background: yellow };
 }
 
 .continue-reading {
   clear: both;
+  font-size: 1.2em;
   a:after {
     content: "\21d2";
   }
 }
 
-.entry-footer p {
-  margin: 0;
+.entry-footer {
+  clear: both;
+  p { margin: 0; }
 }
 
 .entry-tags {
@@ -72,7 +64,7 @@ p.entry-info {
   @include strong-icon("shorturl.png");
 }
 
-.entry-comments {
+.entry-discussions {
   @include strong-icon("comments.png");
 }
 
@@ -82,5 +74,4 @@ p.entry-info {
 
 .entry-widgets, #comments, #pingbacks, #trackbacks {
   padding-top: 1em;
-  border-top: 1px solid $border-color;
 }

@@ -190,13 +190,27 @@ Usage examples: ::
 get_categories
 ==============
 
-Display all the categories available.
+Display all the published categories.
 
 .. autofunction:: get_categories
 
 Usage examples: ::
 
   {% get_categories %}
+  {% get_categories "custom_template.html" %}
+
+.. templatetag:: get_categories_tree
+
+get_categories_tree
+===================
+
+Display a hierarchical tree of all the categories available.
+
+.. autofunction:: get_categories_tree
+
+Usage examples: ::
+
+  {% get_categories_tree %}
   {% get_categories "custom_template.html" %}
 
 .. templatetag:: get_tags
@@ -225,7 +239,8 @@ Usage examples: ::
 
   {% get_tag_cloud %}
   {% get_tag_cloud 9 %}
-  {% get_tag_cloud 9 "custom_template.html" %}
+  {% get_tag_cloud 9 3 %}
+  {% get_tag_cloud 9 3 "custom_template.html" %}
   {% get_tag_cloud template="custom_template.html" %}
 
 .. templatetag:: get_recent_comments
@@ -325,3 +340,56 @@ Usage examples: ::
   {% get_gravatar user.email 50 "PG" "identicon" "https" %}
   {% get_gravatar user.email rating="PG" protocol="https" %}
 
+.. templatefilter:: widont
+
+widont
+======
+
+Insert a non-breaking space between the last two words of your sentence.
+
+.. autofunction:: widont
+
+Usage example: ::
+
+  {{ variable|widont }}
+
+.. templatefilter:: week_number
+
+week_number
+===========
+
+Return the Python week number of a date.
+
+.. autofunction:: week_number
+
+Usage example: ::
+
+  {{ date_variable|week_number }}
+
+.. templatefilter:: comment_admin_urlname
+
+comment_admin_urlname
+=====================
+
+Return an admin URL for managing the comments, whatever the the application
+used.
+
+.. autofunction:: comment_admin_urlname
+
+Usage example: ::
+
+  {% url 'changelist'|comment_admin_urlname %}
+
+.. templatefilter:: user_admin_urlname
+
+user_admin_urlname
+=====================
+
+Return an admin URL for managing the users, whatever the the application
+used.
+
+.. autofunction:: user_admin_urlname
+
+Usage example: ::
+
+  {% url 'changelist'|user_admin_urlname %}

@@ -20,7 +20,9 @@ MOLLOM_PRIVATE_KEY = settings.MOLLOM_PRIVATE_KEY
 
 
 def backend(comment, content_object, request):
-    """Mollom spam checker backend for Zinnia"""
+    """
+    Mollom spam checker backend for Zinnia.
+    """
     mollom_api = MollomAPI(
         publicKey=MOLLOM_PUBLIC_KEY,
         privateKey=MOLLOM_PRIVATE_KEY)
@@ -28,9 +30,9 @@ def backend(comment, content_object, request):
         raise MollomFault('Your MOLLOM credentials are invalid.')
 
     mollom_data = {'authorIP': request.META.get('REMOTE_ADDR', ''),
-                   'authorName': smart_str(comment.userinfo.get('name', '')),
-                   'authorMail': smart_str(comment.userinfo.get('email', '')),
-                   'authorURL': smart_str(comment.userinfo.get('url', ''))}
+                   'authorName': smart_str(comment.name),
+                   'authorMail': smart_str(comment.email),
+                   'authorURL': smart_str(comment.url)}
 
     cc = mollom_api.checkContent(
         postTitle=smart_str(content_object.title),

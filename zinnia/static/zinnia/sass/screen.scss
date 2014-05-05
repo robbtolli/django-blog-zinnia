@@ -2,22 +2,27 @@
 @import "compass/reset";
 // Load configurables variables.
 @import "config/base";
-// Import all the default Blueprint and Susy modules
-// so that we can access their mixins.
-@import "blueprint";
+@import "config/solarized";
+// Load librairies configured.
 @import "susy";
+@import "compass";
 // Import the mixins
 @import "mixins/icons";
 @import "mixins/tag-cloud";
+@import "mixins/alert-box";
+@import "mixins/breakpoint";
 @import "mixins/delimited-list";
 @import "mixins/slider-buttons";
+//
 // Combine the partials into a single screen stylesheet.
 // under the body.zinnia class to avoid interferences
 .zinnia {
   @import "partials/page";
-  @import "partials/two-cols";
+  @import "partials/layouts";
+  @import "partials/themes";
   @import "partials/forms";
-  @import "partials/slider";
+  @import "partials/interactions";
+  @import "partials/archives";
   @import "partials/header";
   @import "partials/footer";
   @import "partials/breadcrumbs";
@@ -25,5 +30,5 @@
   @import "partials/entry";
   @import "partials/linkbacks";
   @import "partials/paginator";
-  @import "partials/django-fixes";
+  @import "partials/slider";
 }

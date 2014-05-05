@@ -11,19 +11,22 @@ Dependencies
 
 Make sure to install these packages prior to installation :
 
-* `Python 2.x`_ >= 2.5
-* `Django`_ >= 1.4
-* `django-mptt`_ >= 0.5.1 < 0.6
-* `django-tagging`_ >= 0.3.1
-* `BeautifulSoup`_ >= 3.2.0
+* `Python`_ >= 2.6.5
+* `Django`_ >= 1.6
+* `PIL`_ >= 1.1.6 or `Pillow`_ >= 2.0.0
+* `django-mptt`_ >= 0.5.1
+* `django-tagging`_ >= 0.3.2
+* `beautifulsoup4`_ >= 4.1.3
 
-The packages below are optionnal but needed for run the full test suite.
+The packages below are optionnal but needed for run the full test suite or
+migrate the database.
 
 * `pytz`_
-* `pyparsing`_ >= 1.5.5
-* `django-xmlrpc`_ >= 0.1.3
+* `South`_ >= 0.7.6
+* `pyparsing`_ >= 2.0.1
+* `django-xmlrpc`_ >= 0.1.5
 
-Note that all the dependencies will be resolved if you install
+Note that all the needed dependencies will be resolved if you install
 Zinnia with :program:`pip` or :program:`easy_install`, excepting Django.
 
 .. _getting-the-code:
@@ -60,7 +63,8 @@ Applications
 
 .. highlight:: python
 
-Then register :mod:`zinnia`, and these following applications in the
+Assuming that you have an already existing Django project, register
+:mod:`zinnia`, and these following applications in the
 :setting:`INSTALLED_APPS` section of your project's settings. ::
 
   INSTALLED_APPS = (
@@ -70,6 +74,7 @@ Then register :mod:`zinnia`, and these following applications in the
     'django.contrib.comments',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
     'django.contrib.contenttypes',
     'tagging',
     'mptt',
@@ -89,38 +94,41 @@ already present. ::
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.i18n',
     'django.core.context_processors.request',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'zinnia.context_processors.version',) # Optional
+    'zinnia.context_processors.version',  # Optional
+  )
 
 .. _urls:
 
 URLs
 ====
 
-Add the following lines to your project's urls.py in order to display the
-blog. ::
+Add at least these following lines to your project's urls.py in order to
+display the Weblog. ::
 
   url(r'^weblog/', include('zinnia.urls')),
   url(r'^comments/', include('django.contrib.comments.urls')),
 
-Note that the default zinnia URLset is provided for convenient usage, but
-you can customize your URLs if you want. Here's how: ::
+Remember to enable the :mod:`~django.contrib.admin` site in the urls.py of
+your project if you haven't done it yet for having the edition capabilities.
+
+Note that the default Zinnia URLset :mod:`zinnia.urls` is calibrated for
+convenient usage, but you can customize your Weblog URLs as you
+want. Here's a custom implementation of the URLs provided by Zinnia: ::
 
   url(r'^', include('zinnia.urls.capabilities')),
   url(r'^search/', include('zinnia.urls.search')),
   url(r'^sitemap/', include('zinnia.urls.sitemap')),
   url(r'^trackback/', include('zinnia.urls.trackback')),
-  url(r'^weblog/tags/', include('zinnia.urls.tags')),
-  url(r'^weblog/feeds/', include('zinnia.urls.feeds')),
-  url(r'^weblog/authors/', include('zinnia.urls.authors')),
-  url(r'^weblog/categories/', include('zinnia.urls.categories')),
-  url(r'^weblog/discussions/', include('zinnia.urls.discussions')),
-  url(r'^weblog/', include('zinnia.urls.entries')),
-  url(r'^weblog/', include('zinnia.urls.archives')),
-  url(r'^weblog/', include('zinnia.urls.shortlink')),
-  url(r'^weblog/', include('zinnia.urls.quick_entry')),
-  url(r'^comments/', include('django.contrib.comments.urls')),
+  url(r'^blog/tags/', include('zinnia.urls.tags')),
+  url(r'^blog/feeds/', include('zinnia.urls.feeds')),
+  url(r'^blog/random/', include('zinnia.urls.random')),
+  url(r'^blog/authors/', include('zinnia.urls.authors')),
+  url(r'^blog/categories/', include('zinnia.urls.categories')),
+  url(r'^blog/comments/', include('zinnia.urls.comments')),
+  url(r'^blog/', include('zinnia.urls.entries')),
+  url(r'^blog/', include('zinnia.urls.archives')),
+  url(r'^blog/', include('zinnia.urls.shortlink')),
+  url(r'^blog/', include('zinnia.urls.quick_entry')),
 
 .. _static-files:
 
@@ -128,7 +136,7 @@ Static Files
 ============
 
 Since the version 1.3 of Django, Zinnia uses the
-:mod:`django.contrib.staticfiles` application to serve the static files
+:mod:`~django.contrib.staticfiles` application to serve the static files
 needed. Please refer to
 https://docs.djangoproject.com/en/dev/howto/static-files/ for more
 informations about serving static files.
@@ -145,16 +153,19 @@ project directory to sync the models with the database. ::
 
   $ python manage.py syncdb
 
-If you are using South to manage your database, you will have to do the
+If you are using `South`_ to manage your database, you will have to do the
 following. ::
 
   $ python manage.py syncdb --migrate
 
-.. _`Python 2.x`: http://www.python.org/
+.. _`Python`: http://www.python.org/
 .. _`Django`: https://www.djangoproject.com/
+.. _`PIL`: http://www.pythonware.com/products/pil/
+.. _`Pillow`: http://python-imaging.github.io/Pillow/
 .. _`django-mptt`: https://github.com/django-mptt/django-mptt/
 .. _`django-tagging`: https://code.google.com/p/django-tagging/
-.. _`BeautifulSoup`: http://www.crummy.com/software/BeautifulSoup/
+.. _`beautifulsoup4`: http://www.crummy.com/software/BeautifulSoup/
 .. _`pytz`: http://pytz.sourceforge.net/
 .. _`pyparsing`: http://pyparsing.wikispaces.com/
 .. _`django-xmlrpc`: https://github.com/Fantomas42/django-xmlrpc
+.. _`South`: http://south.aeracode.org/
