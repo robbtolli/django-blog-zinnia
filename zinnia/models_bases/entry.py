@@ -27,6 +27,7 @@ from zinnia.settings import AUTO_CLOSE_PINGBACKS_AFTER
 from zinnia.settings import AUTO_CLOSE_TRACKBACKS_AFTER
 from zinnia.managers import entries_published
 from zinnia.managers import EntryPublishedManager
+from zinnia.managers import EntryAnonViewablePublishedManager
 from zinnia.managers import DRAFT, HIDDEN, PUBLISHED
 from zinnia.url_shortener import get_url_shortener
 
@@ -80,6 +81,7 @@ class CoreEntry(models.Model):
 
     objects = models.Manager()
     published = EntryPublishedManager()
+    anon_viewable_published = EntryAnonViewablePublishedManager()
 
     @property
     def is_actual(self):
